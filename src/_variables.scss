@@ -2,3 +2,52 @@ $events: #7adfa9;
 $dine: #f5921e;
 $burger: #f1e000;
 $cocktail: #d143c8;
+$darkBlue: #04378c;
+
+*{
+    box-sizing: border-box;
+}
+
+.events{
+    background-color: $events;
+    color: $darkBlue;
+    border: 1px solid $darkBlue;
+    &:hover{
+        background-color: $darkBlue;
+        color: $events;
+        border: 1px solid $events;
+    }
+}
+
+.dine{
+    background-color: $dine;
+    color: $darkBlue;
+    border: 1px solid $darkBlue;
+    &:hover{
+        background-color: $darkBlue;
+        color: $dine;
+        border: 1px solid $dine;
+    }
+}
+
+.burger{
+    background-color: $burger;
+    color: $darkBlue;
+    border: 1px solid $darkBlue;
+    &:hover{
+        background-color: $darkBlue;
+        color: $burger;
+        border: 1px solid $burger;
+    }
+}
+
+.cocktails{
+    background-color: $cocktail;
+    color: $darkBlue;
+    border: 1px solid $darkBlue;
+    &:hover{
+        background-color: $darkBlue;
+        color: $cocktail;
+        border: 1px solid $cocktail;
+    }
+}
