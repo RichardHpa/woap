@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
 import axios from 'axios'
 import './Map.scss';
+const API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+
 
 export class MapContainer extends Component {
     constructor(props){
@@ -45,58 +47,55 @@ export class MapContainer extends Component {
         //     console.log(this.state.locations);
         // }
       return (
-          <div className="container">
+          <Map
+              google={this.props.google}
+              initialCenter={{
+                 lat: -41.2865,
+                 lng: 174.7762
+               }}
+               zoom={12}
+          >
           {
-                this.state.locations.map(location => {
+                this.state.markers.map(marker => {
                     return(
-                        <div
-                        key={location.Venue.id}
-                         className="locationCard">
-                            <div className="card">
-                                <img className="img-top" src={location.Venue.image}/>
-                                <div className="card-body">
-                                    <h5>{location.Venue.title}</h5>
-                                </div>
-                            </div>
-                        </div>
+                        <Marker
+                        key={marker.id}
+                         title={marker.title}
+                         name={marker.title}
+                         position={{lat: marker.lat, lng: marker.lng}} />
                     )
 
                 })
             }
-          </div>
+
+          </Map>
       );
     }
   }
-  //
-  // <Marker
-  //  title={'The marker`s title will appear as a tooltip.'}
-  //  name={'SOMA'}
-  //  position={{lat: -41.2865, lng: 174.7762}} />
+
 
 
 export default GoogleApiWrapper({
-  apiKey: ('AIzaSyBG1GkBIq_BFaENfsdC9Rw7i-MbW6xY3kg')
+  apiKey: (API_KEY)
 })(MapContainer)
 
-// <Map
-//     google={this.props.google}
-//     initialCenter={{
-//        lat: -41.2865,
-//        lng: 174.7762
-//      }}
-//      zoom={12}
-// >
+
+// <div className="container">
 // {
-//       this.state.markers.map(marker => {
+//       this.state.locations.map(location => {
 //           return(
-//               <Marker
-//               key={marker.id}
-//                title={marker.title}
-//                name={marker.title}
-//                position={{lat: marker.lat, lng: marker.lng}} />
+//               <div
+//               key={location.Venue.id}
+//                className="locationCard">
+//                   <div className="card">
+//                       <img className="img-top" src={location.Venue.image}/>
+//                       <div className="card-body">
+//                           <h5>{location.Venue.title}</h5>
+//                       </div>
+//                   </div>
+//               </div>
 //           )
 //
 //       })
 //   }
-//
-// </Map>
+// </div>
