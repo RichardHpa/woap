@@ -17,6 +17,11 @@ $darkBlue: #04378c;
         color: $events;
         border: 1px solid $events;
     }
+    &.active{
+        background-color: $darkBlue;
+        color: $events;
+        border: 1px solid $events;
+    }
 }
 
 .dine{
@@ -24,6 +29,11 @@ $darkBlue: #04378c;
     color: $darkBlue;
     border: 1px solid $darkBlue;
     &:hover{
+        background-color: $darkBlue;
+        color: $dine;
+        border: 1px solid $dine;
+    }
+    &.active{
         background-color: $darkBlue;
         color: $dine;
         border: 1px solid $dine;
@@ -39,13 +49,23 @@ $darkBlue: #04378c;
         color: $burger;
         border: 1px solid $burger;
     }
+    &.active{
+        background-color: $darkBlue;
+        color: $dine;
+        border: 1px solid $dine;
+    }
 }
 
-.cocktails{
+.cocktail{
     background-color: $cocktail;
     color: $darkBlue;
     border: 1px solid $darkBlue;
     &:hover{
+        background-color: $darkBlue;
+        color: $cocktail;
+        border: 1px solid $cocktail;
+    }
+    &.active{
         background-color: $darkBlue;
         color: $cocktail;
         border: 1px solid $cocktail;

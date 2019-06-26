@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import logo from '../woap19-logo.svg';
 import './App.scss';
 import MapContainer from '../Map/Map';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHamburger, faFlag, faUtensils, faCocktail } from '@fortawesome/free-solid-svg-icons'
 
 class App extends Component {
     constructor(props){
@@ -27,8 +29,6 @@ class App extends Component {
                 }));
             }, 1200)
         }, 3000)
-
-
     }
 
     toggleNav(){
@@ -44,7 +44,7 @@ class App extends Component {
     }
 
     render(){
-        const { pageLoaded, navOpen , navVisibile} = this.state;
+        const { pageLoaded, navOpen , navVisibile, currentView} = this.state;
         return(
             <div className="App">
                 <header className={`App-header ${pageLoaded? '': 'App-Loading'}`}>
@@ -66,17 +66,17 @@ class App extends Component {
                     <h1>VISA WELLINGTON ON A PLATE 2019</h1>
                     <hr/>
                     <div className="festivalCatsContainer">
-                        <div className="festivalCats events" onClick={this.changeView.bind(this,'event')}>Events</div>
-                        <div className="festivalCats dine" onClick={this.changeView.bind(this,'dine')}>Dine</div>
-                        <div className="festivalCats burger" onClick={this.changeView.bind(this,'burger')}>Burger</div>
-                        <div className="festivalCats cocktails" onClick={this.changeView.bind(this,'cocktail')}>Cocktails</div>
+                        <div className={`festivalCats events ${currentView === 'event'? 'active': ''}`} onClick={this.changeView.bind(this,'event')}><FontAwesomeIcon icon={faFlag}/> Events</div>
+                        <div className={`festivalCats dine ${currentView === 'dine'? 'active': ''}`} onClick={this.changeView.bind(this,'dine')}><FontAwesomeIcon icon={faUtensils}/> Dine</div>
+                        <div className={`festivalCats burger ${currentView === 'burger'? 'active': ''}`} onClick={this.changeView.bind(this,'burger')}> <FontAwesomeIcon icon={faHamburger}/> Burger</div>
+                        <div className={`festivalCats cocktail ${currentView === 'cocktail'? 'active': ''}`} onClick={this.changeView.bind(this,'cocktail')}><FontAwesomeIcon icon={faCocktail}/> Cocktails</div>
                     </div>
                 </div>
 
                 <div id="Map">
                     <h1>VISA WELLINGTON ON A PLATE 2019</h1>
                     <MapContainer
-
+                        currentView={this.state.currentView}
                     />
                 </div>
 
