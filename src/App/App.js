@@ -9,9 +9,9 @@ class App extends Component {
     constructor(props){
         super(props)
         this.state = {
-            pageLoaded: false,
+            pageLoaded: true,
             navVisibile: false,
-            navOpen: false,
+            navOpen: true,
             currentView: 'all'
         }
         this.toggleNav = this.toggleNav.bind(this);

@@ -33,47 +33,49 @@ export class MapContainer extends Component {
     }
 
     componentDidUpdate(prevProps) {
-      // Typical usage (don't forget to compare props):
+        this.setState({
+            markers: []
+        })
       if (this.props.currentView !== prevProps.currentView) {
+
           const { locations } = this.state;
           var newView = this.props.currentView;
-          var searchTerm = '';
+          var eventID = 0;
           switch(newView){
               case 'event':
-                searchTerm = '';
-              break;
-              case 'dine':
-                searchTerm = 'festival_dish_description';
-              break;
-              case 'cocktail':
-                searchTerm = 'main_type_of_spirit_in_your_cocktail';
+                eventID = 29;
               break;
               case 'burger':
-                searchTerm = 'burger_price';
+                eventID = 30;
+              break;
+              case 'dine':
+                  eventID = 31;
+              break;
+              case 'cocktail':
+                eventID = 32;
               break;
           }
 
           var eventsToShow = [];
-
+          var iterationNum = 1
           for (var i = 0; i < locations.length; i++) {
               var venue = locations[i];
               for (var j = 0; j < venue.Event.length; j++) {
                   var singleEvent = venue.Event[j];
-                  if(singleEvent[searchTerm] !== undefined){
+                  if(singleEvent['event_type_id'] == eventID){
                       var latLng = venue.Venue.ll.split(",");
                       eventsToShow.push({
-                          id: i+1,
+                          id: iterationNum,
                           venueDetails: venue.Venue,
                           eventDetails: singleEvent,
                           lat: parseFloat(latLng[0]),
                           lng: parseFloat(latLng[1])
-                      })
-                    }
-
+                      });
+                      iterationNum++;
+                  }
                 }
-
             }
-            console.log(eventsToShow);
+            // console.log(eventsToShow);
             this.setState({
                 markers: eventsToShow,
                 currentType: newView
@@ -84,6 +86,22 @@ export class MapContainer extends Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         return (this.state.currentType !== nextProps.currentView);
+    }
+
+    renderMarkers() {
+      return this.state.markers.map((marker, i) => {
+        return <Marker
+          key={ i }
+          title={marker.title}
+          name={marker.title}
+          animation={this.props.google.maps.Animation.DROP}
+          position={{lat: marker.lat, lng: marker.lng}} />
+      })
+    }
+
+    boundsChanged(bounds){
+        console.log('here');
+        // console.log(this.map.getBounds().getNorthEast());
     }
 
 
@@ -97,19 +115,12 @@ export class MapContainer extends Component {
                  lng: 174.7762
                }}
                zoom={12}
+               onDragend={this.boundsChanged}
+
           >
           {
-                this.state.markers.map(marker => {
-                    return(
-                        <Marker
-                        key={marker.id}
-                         title={marker.title}
-                         name={marker.title}
-                         position={{lat: marker.lat, lng: marker.lng}} />
-                    )
-
-                })
-            }
+              this.renderMarkers()
+          }
 
           </Map>
       );
