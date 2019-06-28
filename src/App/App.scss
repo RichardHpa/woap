@@ -45,7 +45,7 @@
     width: 100vw;
     height: 100vh;
     z-index: 1;
-    overflow: scroll;
+    overflow: auto;
 }
 
 
@@ -165,7 +165,7 @@
 .festivalCatsContainer{
     display: flex;
     flex-wrap: wrap;
-    padding-top: 10px;
+    padding: 10px 0;
 }
 
 .festivalCats{
@@ -188,5 +188,13 @@
     }
     &:nth-child(4){
         border-bottom-right-radius: 10px;
+    }
+}
+
+.eventDetails{
+    padding-top: 10px;
+    img{
+        padding-top: 10px;
+        max-width: 100%;
     }
 }

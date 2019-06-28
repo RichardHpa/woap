@@ -3,6 +3,7 @@ import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
 import axios from 'axios'
 import './Map.scss';
 const API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+const styles = require('./GoogleMapStyles.json')
 
 
 export class MapContainer extends Component {
@@ -14,6 +15,7 @@ export class MapContainer extends Component {
             currentType: 'all',
             currentView: []
         }
+        this.onMarkerClick = this.onMarkerClick.bind(this);
     }
 
     componentDidMount () {
@@ -25,7 +27,7 @@ export class MapContainer extends Component {
                     allLocations.push(response.data.venues[i]);
                 }
             }
-            console.log(allLocations);
+            // console.log(allLocations);
             this.setState({
                 locations: allLocations
             })
@@ -33,11 +35,10 @@ export class MapContainer extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        this.setState({
-            markers: []
-        })
+        // this.setState({
+        //     markers: []
+        // })
       if (this.props.currentView !== prevProps.currentView) {
-
           const { locations } = this.state;
           var newView = this.props.currentView;
           var eventID = 0;
@@ -53,6 +54,9 @@ export class MapContainer extends Component {
               break;
               case 'cocktail':
                 eventID = 32;
+              break;
+              default:
+
               break;
           }
 
@@ -75,7 +79,6 @@ export class MapContainer extends Component {
                   }
                 }
             }
-            // console.log(eventsToShow);
             this.setState({
                 markers: eventsToShow,
                 currentType: newView
@@ -91,22 +94,36 @@ export class MapContainer extends Component {
     renderMarkers() {
       return this.state.markers.map((marker, i) => {
         return <Marker
-          key={ i }
+          key={i}
+          markerID={marker.id}
           title={marker.title}
           name={marker.title}
           animation={this.props.google.maps.Animation.DROP}
-          position={{lat: marker.lat, lng: marker.lng}} />
+          position={{lat: marker.lat, lng: marker.lng}}
+          onClick={this.onMarkerClick}
+          />
       })
     }
 
     boundsChanged(bounds){
         console.log('here');
+
         // console.log(this.map.getBounds().getNorthEast());
     }
 
 
+    onMarkerClick(props, marker, e){
+        const { markers } = this.state;
+        var markerID = props.markerID;
+        for (var i = 0; i < markers.length; i++) {
+            if(markers[i].id === markerID){
+                this.props.selectedMarker(markers[i]);
+                break;
+            }
+        }
+    }
+
     render() {
-        const { locations } = this.state;
       return (
           <Map
               google={this.props.google}
@@ -116,6 +133,7 @@ export class MapContainer extends Component {
                }}
                zoom={12}
                onDragend={this.boundsChanged}
+               styles={styles}
 
           >
           {
