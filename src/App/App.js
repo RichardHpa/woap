@@ -12,7 +12,7 @@ class App extends Component {
             pageLoaded: false,
             navVisibile: false,
             navOpen: false,
-            currentView: 'all',
+            currentView: 'burger',
             currentEvent: {
                   id: 30,
                   venueDetails: {
@@ -167,13 +167,43 @@ class App extends Component {
     }
 
     handleSelectMarker(marker){
-        console.log(marker);
-        var myJSON = JSON.stringify(marker);
-        console.log(myJSON);
+        // console.log(marker);
+        // var myJSON = JSON.stringify(marker);
+        // console.log(myJSON);
         this.setState({
             currentEvent: marker
         });
     }
+
+    handleImageLoaded(){
+        console.log("image has loaded");
+    }
+    renderMoreInfo(){
+        const {currentEvent, currentView} = this.state;
+        if(currentView === 'burger'){
+            return (
+                <div className="eventDetails">
+                    <h2>{currentEvent['eventDetails']['name_of_burger']}</h2>
+                    <img
+                        src={currentEvent['eventDetails']['image']} alt={currentEvent['eventDetails']['name_of_burger']}
+                        onLoad={this.handleImageLoaded.bind(this)}
+
+                    />
+                    <p>{currentEvent['eventDetails']['burger_description']}</p>
+                    <h3>{currentEvent['venueDetails']['title']}</h3>
+                    <p>{currentEvent['venueDetails']['address1']}, {currentEvent['venueDetails']['address2']}</p>
+                </div>
+            )
+        } else {
+            return (
+                <div className="eventDetails">
+                    <p>nothing Yet</p>
+                </div>
+            )
+        }
+
+    }
+
     render(){
         const { pageLoaded, navOpen , navVisibile, currentView, currentEvent} = this.state;
         return(
@@ -202,19 +232,7 @@ class App extends Component {
                         <div className={`festivalCats cocktail ${currentView === 'cocktail'? 'active': ''}`} onClick={this.changeView.bind(this,'cocktail')}><FontAwesomeIcon icon={faCocktail}/> Cocktails</div>
                     </div>
                     <hr/>
-                    {
-                        currentEvent? <div className="eventDetails">
-                            <h2>{currentEvent['eventDetails']['name_of_burger']}</h2>
-                            <img src={currentEvent['eventDetails']['image']} alt={currentEvent['eventDetails']['name_of_burger']}/>
-                            <p>{currentEvent['eventDetails']['burger_description']}</p>
-                            <h3>{currentEvent['venueDetails']['title']}</h3>
-                            <p>{currentEvent['venueDetails']['address1']}, {currentEvent['venueDetails']['address2']}</p>
-                        </div>
-
-                        :
-
-                        ''
-                    }
+                    { currentEvent? this.renderMoreInfo() : '' }
                 </div>
 
                 <div id="Map">
