@@ -27,15 +27,6 @@ class Info extends Component {
                     imgLoaded: false
                 })
             }
-            //     this.setState({
-            //         loaded: false,
-            //         imgLoaded: false
-            //     })
-            // } else {
-            //     this.setState({
-            //         loaded: true,
-            //     })
-            // }
         }
 
 

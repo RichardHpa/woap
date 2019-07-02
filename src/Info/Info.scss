@@ -23,7 +23,7 @@
 
 .infoSidebar{
     padding: 75px 10px;
-    width: 30vw;
+    width: 100vw;
     background-color: #036BA3;
     position: absolute;
     left: 0;
@@ -34,7 +34,7 @@
     -o-transition: .5s ease-in-out;
     transition: .5s ease-in-out;
     &.InfoOpen{
-        left: 30vw;
+        left: 100vw;
     }
 
     .backArrow{
@@ -133,4 +133,23 @@
   100% {
     opacity: 0;
   }
+}
+
+@media screen and (min-width:576px){
+    .infoSidebar{
+        width: 50vw;
+        &.InfoOpen{
+            left: 50vw;
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    .infoSidebar{
+        width: 30vw;
+        &.InfoOpen{
+            left: 30vw;
+        }
+    }
+
 }
