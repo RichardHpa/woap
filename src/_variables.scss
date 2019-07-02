@@ -11,7 +11,7 @@ $darkBlue: #04378c;
 .events{
     background-color: $events;
     color: $darkBlue;
-    border: 1px solid $darkBlue;
+    border: 1px solid $events;
     &:hover{
         background-color: $darkBlue;
         color: $events;
@@ -27,7 +27,7 @@ $darkBlue: #04378c;
 .dine{
     background-color: $dine;
     color: $darkBlue;
-    border: 1px solid $darkBlue;
+    border: 1px solid $dine;
     &:hover{
         background-color: $darkBlue;
         color: $dine;
@@ -43,7 +43,7 @@ $darkBlue: #04378c;
 .burger{
     background-color: $burger;
     color: $darkBlue;
-    border: 1px solid $darkBlue;
+    border: 1px solid $burger;
     &:hover{
         background-color: $darkBlue;
         color: $burger;
@@ -51,15 +51,15 @@ $darkBlue: #04378c;
     }
     &.active{
         background-color: $darkBlue;
-        color: $dine;
-        border: 1px solid $dine;
+        color: $burger;
+        border: 1px solid $burger;
     }
 }
 
 .cocktail{
     background-color: $cocktail;
     color: $darkBlue;
-    border: 1px solid $darkBlue;
+    border: 1px solid $cocktail;
     &:hover{
         background-color: $darkBlue;
         color: $cocktail;
