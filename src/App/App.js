@@ -3,18 +3,20 @@ import logo from '../woap19-logo.svg';
 import './App.scss';
 import MapContainer from '../Map/Map';
 import Info from '../Info/Info';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHamburger, faFlag, faUtensils, faCocktail } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHamburger, faFlag, faUtensils, faCocktail } from '@fortawesome/free-solid-svg-icons';
+import InputRange from 'react-input-range';
 
 class App extends Component {
     constructor(props){
         super(props)
         this.state = {
-            pageLoaded: true,
+            pageLoaded: false,
             navVisibile: false,
-            navOpen: true,
+            navOpen: false,
             currentView: 'burger',
-            currentEvent: null
+            currentEvent: null,
+             value: { min: 2, max: 10 },
         }
         this.toggleNav = this.toggleNav.bind(this);
         this.changeView = this.changeView.bind(this);
@@ -40,7 +42,6 @@ class App extends Component {
         this.setState(prevState => ({
           navOpen: !prevState.navOpen
         }));
-
     }
 
     changeView(type){
@@ -90,7 +91,10 @@ class App extends Component {
                             <div className={`festivalCats burger ${currentView === 'burger'? 'active': ''}`} onClick={this.changeView.bind(this,'burger')}> <FontAwesomeIcon icon={faHamburger}/> Burger</div>
                             <div className={`festivalCats cocktail ${currentView === 'cocktail'? 'active': ''}`} onClick={this.changeView.bind(this,'cocktail')}><FontAwesomeIcon icon={faCocktail}/> Cocktails</div>
                         </div>
-                        <hr/>
+                        <div className="priceFilter">
+                            <label>Price Range ($)</label>
+                        </div>
+
                     </div>
 
 
@@ -116,3 +120,10 @@ class App extends Component {
 export default App;
 
 //
+
+// <InputRange
+//   maxValue={20}
+//   minValue={0}
+//   value={this.state.value}
+//   formatLabel={value => `$${value}`}
+//   onChange={value => this.setState({ value })} />
