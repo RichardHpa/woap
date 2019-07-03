@@ -56,7 +56,7 @@
     "featureType": "landscape",
     "stylers": [
       {
-        "color": "#76ddab"
+        "color": "#7adfa9"
       }
     ]
   },
@@ -112,7 +112,7 @@
     "elementType": "geometry.fill",
     "stylers": [
       {
-        "color": "#549e7a"
+        "color": "#65be91"
       }
     ]
   },

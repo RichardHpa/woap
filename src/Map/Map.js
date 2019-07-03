@@ -10,25 +10,53 @@ export class MapContainer extends Component {
     constructor(props){
         super(props)
         this.state = {
+            markers: [],
+            currentType: '',
             stores: [{latitude: -41.292662, longitude: 174.778967},
-                     {latitude: -41.2936945, longitude: 174.7731592},
-                     {latitude: -41.291377, longitude: 174.7922569},
-                     {latitude: -41.287890, longitude: 174.779022},
-                     {latitude: -41.293972, longitude: 174.782270}]
-           }
+                {latitude: -41.2936945, longitude: 174.7731592},
+                {latitude: -41.291377, longitude: 174.7922569},
+                {latitude: -41.287890, longitude: 174.779022},
+                {latitude: -41.293972, longitude: 174.782270}]
         }
+    }
+
+    componentDidMount () {
+        this.setState({
+            markers: this.props.currentMarkers,
+            currentType: this.props.currentView
+        })
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.currentView !== prevProps.currentView) {
+            console.log(this.props.currentMarkers);
+            this.setState({
+                markers: this.props.currentMarkers,
+                currentType: this.props.currentView
+            })
+        }
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return (this.state.currentType !== nextProps.currentView);
+    }
 
         displayMarkers = () => {
-              return this.state.stores.map((store, index) => {
-                return <Marker key={index} id={index} position={{
-                 lat: store.latitude,
-                 lng: store.longitude
+              return this.state.markers.map((store, index) => {
+                return <Marker
+                key={index}
+                id={index}
+                icon={{ url: '/markers/'+this.state.currentType+'Marker.png' }}
+                position={{
+                 lat: store.lat,
+                 lng: store.lng
                }}
                onClick={() => console.log("You clicked me!")} />
               })
         }
 
     render() {
+
       return (
           <Map
               google={this.props.google}
