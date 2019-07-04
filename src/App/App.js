@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from '../woap19-logo.svg';
 import './App.scss';
 import axios from 'axios'
+import Info from '../Info/Info';
 import MapContainer from '../Map/Map';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHamburger, faFlag, faUtensils, faCocktail } from '@fortawesome/free-solid-svg-icons';
@@ -11,12 +12,18 @@ class App extends Component {
         super(props)
         this.state = {
             appLoaded: false,
+            eventsLoaded: false,
             navVisibile: false,
             navOpen: false,
             allEvents: [],
             currentView: 'burger',
+            currentEvent: null
         }
+
+        this.handleMapReady = this.handleMapReady.bind(this);
         this.toggleNav = this.toggleNav.bind(this);
+        this.handleSelectMarker = this.handleSelectMarker.bind(this);
+        this.handleMapClick = this.handleMapClick.bind(this);
     }
 
     componentDidMount () {
@@ -65,9 +72,8 @@ class App extends Component {
                 }
             }
             this.setState({
-                appLoaded: true,
-                navVisibile: true,
-                allEvents: allEvents
+                allEvents: allEvents,
+                eventsLoaded: true
             });
         })
         //This needs to be called from another function when the Map is ready
@@ -84,11 +90,18 @@ class App extends Component {
         // }, 3000)
     }
 
-    changeView(type){
-        console.log(type);
-        console.log(this.state.allEvents[type]);
+    handleMapReady(){
+        console.log('ready');
         this.setState({
-            currentView: type
+            appLoaded: true,
+            navVisibile: true,
+        })
+    }
+
+    changeView(type){
+        this.setState({
+            currentView: type,
+            currentEvent: null
         })
     }
 
@@ -98,8 +111,20 @@ class App extends Component {
         }));
     }
 
+    handleSelectMarker(marker){
+        this.setState({
+            currentEvent: marker
+        });
+    }
+
+    handleMapClick(){
+        this.setState({
+            currentEvent: null
+        });
+    }
+
     render(){
-        const { appLoaded, navOpen , navVisibile, allEvents, currentView} = this.state;
+        const { appLoaded, navOpen , navVisibile, allEvents, currentView, currentEvent, eventsLoaded} = this.state;
         return(
             <div className="App">
                 <header className={`App-header ${appLoaded? '': 'App-Loading'}`}>
@@ -126,19 +151,21 @@ class App extends Component {
                             <div className={`festivalCats burger ${currentView === 'burger'? 'active': ''}`} onClick={this.changeView.bind(this,'burger')}> <FontAwesomeIcon icon={faHamburger}/> Burger</div>
                             <div className={`festivalCats cocktail ${currentView === 'cocktail'? 'active': ''}`} onClick={this.changeView.bind(this,'cocktail')}><FontAwesomeIcon icon={faCocktail}/> Cocktails</div>
                         </div>
-                        <div className="priceFilter">
-                            <label>Price Range ($)</label>
-                        </div>
-
                     </div>
+                    <Info
+                        currentEvent={currentEvent}
+                        currentView={currentView}
+                        closeEvent={this.handleMapClick}
+                    />
                 </div>
                 <div id="Map">
                 {
-                    appLoaded? <MapContainer
+                    eventsLoaded? <MapContainer
                         currentView={this.state.currentView}
                         currentMarkers={allEvents[currentView]}
                         selectedMarker={this.handleSelectMarker}
                         mapClick={this.handleMapClick}
+                        mapReady={this.handleMapReady}
                     />: ''
                 }
 
