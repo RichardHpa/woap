@@ -2,7 +2,7 @@
   "name": "woap",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://richardhpa.github.io/woap/",
+  "homepage": "https://richardhpa.github.io/woap",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.19",
     "@fortawesome/free-solid-svg-icons": "^5.9.0",
