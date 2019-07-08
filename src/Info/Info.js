@@ -56,6 +56,7 @@ class Info extends Component {
                         }
                             <img
                                 src={currentEvent['eventDetails']['image']}
+                                alt={currentEvent['eventDetails']['name_of_burger']}
                                 className="imgSrc"
                                 onLoad={this.handleImageLoad}
                             />
@@ -79,6 +80,7 @@ class Info extends Component {
                             <img
                                 src={currentEvent['eventDetails']['image']}
                                 className="imgSrc"
+                                alt={currentEvent['venueDetails']['title']}
                                 onLoad={this.handleImageLoad}
                             />
                         </div>
@@ -102,6 +104,7 @@ class Info extends Component {
                             <img
                                 src={currentEvent['eventDetails']['image']}
                                 className="imgSrc"
+                                alt={currentEvent['eventDetails']['title']}
                                 onLoad={this.handleImageLoad}
                             />
                         </div>
@@ -125,6 +128,7 @@ class Info extends Component {
                             <img
                                 src={currentEvent['eventDetails']['image']}
                                 className="imgSrc"
+                                alt={currentEvent['eventDetails']['title']}
                                 onLoad={this.handleImageLoad}
                             />
                         </div>

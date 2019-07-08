@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
 import './Map.scss';
 const API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
-const styles = require('./GoogleMapStyles.json')
-
+const styles = require('./GoogleMapStyles.json');
 
 export class MapContainer extends Component {
     constructor(props){
@@ -50,8 +49,6 @@ export class MapContainer extends Component {
 
     onMarkerClick(props, marker, e){
         const { markers } = this.state;
-        // marker.icon['url'] = '/markers/selectedMarker.png'
-        // console.log(marker);
         var markerID = props.id;
         for (var i = 0; i < markers.length; i++) {
             if(markers[i].id === markerID){
@@ -73,11 +70,10 @@ export class MapContainer extends Component {
     displayMarkers = () => {
         const { activeMarker } = this.state;
         const { currentEvent } = this.props;
-
         return this.state.markers.map((marker, index) => {
-            let icon = '/markers/'+this.state.currentType+'Marker.png';
+            let icon = process.env.PUBLIC_URL + '/img/'+this.state.currentType+'Marker.png';
             if(activeMarker && (activeMarker.id === marker.id)){
-                icon = '/markers/selectedMarker.png';
+                icon = process.env.PUBLIC_URL + '/img/selectedMarker.png';
             }
             return <Marker
                 key={index}
@@ -115,33 +111,6 @@ export class MapContainer extends Component {
     }
   }
 
-
 export default GoogleApiWrapper({
   apiKey: (API_KEY)
 })(MapContainer)
-
-
-
-
-
-
-
-// <div className="container">
-// {
-//       this.state.locations.map(location => {
-//           return(
-//               <div
-//               key={location.Venue.id}
-//                className="locationCard">
-//                   <div className="card">
-//                       <img className="img-top" src={location.Venue.image} alt="image"/>
-//                       <div className="card-body">
-//                           <h5>{location.Venue.title}</h5>
-//                       </div>
-//                   </div>
-//               </div>
-//           )
-//
-//       })
-//   }
-// </div>
