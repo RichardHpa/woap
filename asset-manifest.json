@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/woap/static/css/main.7571ee6b.chunk.css",
+    "main.css": "/woap/static/css/main.22deed3d.chunk.css",
     "main.js": "/woap/static/js/main.2564d010.chunk.js",
     "main.js.map": "/woap/static/js/main.2564d010.chunk.js.map",
     "runtime~main.js": "/woap/static/js/runtime~main.23542a0b.js",
@@ -8,9 +8,9 @@
     "static/js/2.2cff3ef9.chunk.js": "/woap/static/js/2.2cff3ef9.chunk.js",
     "static/js/2.2cff3ef9.chunk.js.map": "/woap/static/js/2.2cff3ef9.chunk.js.map",
     "index.html": "/woap/index.html",
-    "precache-manifest.bcf504ad506de7a5d5839c52d3b5e021.js": "/woap/precache-manifest.bcf504ad506de7a5d5839c52d3b5e021.js",
+    "precache-manifest.4890cdb230fa15e894e11ed90b0faa73.js": "/woap/precache-manifest.4890cdb230fa15e894e11ed90b0faa73.js",
     "service-worker.js": "/woap/service-worker.js",
-    "static/css/main.7571ee6b.chunk.css.map": "/woap/static/css/main.7571ee6b.chunk.css.map",
+    "static/css/main.22deed3d.chunk.css.map": "/woap/static/css/main.22deed3d.chunk.css.map",
     "static/media/woap19-logo.svg": "/woap/static/media/woap19-logo.3c90ae3e.svg"
   }
 }
