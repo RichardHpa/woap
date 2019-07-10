@@ -28,8 +28,6 @@ class Info extends Component {
                 })
             }
         }
-
-
     }
 
     handleImageLoad(){

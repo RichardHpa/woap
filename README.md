@@ -10,4 +10,6 @@ $ npm install
 
 ___
 
-This is an unofficial app and has been created as a fun personal project
+This is an unofficial app and has been created as a fun personal project  
+
+[Check out the app here](https://richardhpa.github.io/woap/)
