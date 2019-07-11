@@ -27,6 +27,7 @@
 
 .infoSidebar{
     overflow: auto;
+    -webkit-overflow-scrolling: touch;
     padding: 75px 10px;
     width: 100vw;
     background-color: #036BA3;
