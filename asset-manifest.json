@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/woap/static/css/main.38664df8.chunk.css",
+    "main.css": "/woap/static/css/main.e0012dd1.chunk.css",
     "main.js": "/woap/static/js/main.2564d010.chunk.js",
     "main.js.map": "/woap/static/js/main.2564d010.chunk.js.map",
     "runtime~main.js": "/woap/static/js/runtime~main.23542a0b.js",
@@ -8,9 +8,9 @@
     "static/js/2.2cff3ef9.chunk.js": "/woap/static/js/2.2cff3ef9.chunk.js",
     "static/js/2.2cff3ef9.chunk.js.map": "/woap/static/js/2.2cff3ef9.chunk.js.map",
     "index.html": "/woap/index.html",
-    "precache-manifest.2293f069c916e03ef9632fbccafd4e60.js": "/woap/precache-manifest.2293f069c916e03ef9632fbccafd4e60.js",
+    "precache-manifest.f124245d743ac99418ae93470aa4a98f.js": "/woap/precache-manifest.f124245d743ac99418ae93470aa4a98f.js",
     "service-worker.js": "/woap/service-worker.js",
-    "static/css/main.38664df8.chunk.css.map": "/woap/static/css/main.38664df8.chunk.css.map",
+    "static/css/main.e0012dd1.chunk.css.map": "/woap/static/css/main.e0012dd1.chunk.css.map",
     "static/media/woap19-logo.svg": "/woap/static/media/woap19-logo.3c90ae3e.svg"
   }
 }
