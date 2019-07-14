@@ -6,6 +6,7 @@ import Info from '../Info/Info';
 import MapContainer from '../Map/Map';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHamburger, faFlag, faUtensils, faCocktail } from '@fortawesome/free-solid-svg-icons';
+import InputRange from 'react-input-range';
 
 class App extends Component {
     constructor(props){
@@ -17,13 +18,18 @@ class App extends Component {
             navOpen: false,
             allEvents: [],
             currentView: 'burger',
-            currentEvent: null
+            currentEvent: null,
+            value: { min: 2, max: 10 },
+            filters: {min: 0, max: 10},
+            filteredMarkers: []
         }
 
         this.handleMapReady = this.handleMapReady.bind(this);
         this.toggleNav = this.toggleNav.bind(this);
         this.handleSelectMarker = this.handleSelectMarker.bind(this);
         this.handleMapClick = this.handleMapClick.bind(this);
+        this.changeFilter = this.changeFilter.bind(this);
+        this.filter = this.filter.bind(this);
     }
 
     componentDidMount () {
@@ -71,27 +77,34 @@ class App extends Component {
                     iterationNum++;
                 }
             }
+            var min = 10000000;
+            var max = 0;
+            for (var k = 0; k < allEvents['burger'].length; k++) {
+                let price = parseInt(allEvents['burger'][k].eventDetails.burger_price);
+                if(price < min){
+                    min = price;
+                }
+                if(price > max){
+                    max = price;
+                }
+            }
             this.setState({
                 allEvents: allEvents,
-                eventsLoaded: true
+                eventsLoaded: true,
+                filters: {
+                    min: min,
+                    max: max
+                },
+                value: {
+                    min: 0,
+                    max: max
+                },
+                filteredMarkers: allEvents[this.state.currentView]
             });
         })
-        //This needs to be called from another function when the Map is ready
-        // var self = this;
-        // setTimeout(function(){
-        //     self.setState({
-        //         appLoaded: true,
-        //     });
-        //     setTimeout(function(){
-        //         self.setState(prevState => ({
-        //           navVisibile: !prevState.navVisibile
-        //         }));
-        //     }, 1200)
-        // }, 3000)
     }
 
     handleMapReady(){
-        console.log('ready');
         this.setState({
             appLoaded: true,
             navVisibile: true,
@@ -123,6 +136,26 @@ class App extends Component {
         });
     }
 
+    changeFilter(value){
+        this.setState({
+            value: value
+        })
+    }
+
+    filter(){
+        const {value, allEvents, currentView, filteredMarkers} = this.state;
+        let filteredEvents = []
+        for (var i = 0; i < allEvents[currentView].length; i++) {
+            let price = parseInt(allEvents[currentView][i].eventDetails.burger_price);
+            if((price > value.min)){
+                filteredEvents.push(allEvents[currentView][i]);
+            }
+        }
+        this.setState({
+            filteredMarkers: filteredEvents
+        })
+    }
+
     render(){
         const { appLoaded, navOpen , navVisibile, allEvents, currentView, currentEvent, eventsLoaded} = this.state;
         return(
@@ -143,7 +176,6 @@ class App extends Component {
                     </div>
                 </div>
                 <div className={`sidebar ${navOpen? 'sidebar-open': ''}`}>
-
                     <div className="filters">
                         <div className="festivalCatsContainer">
                             <div className={`festivalCats events ${currentView === 'events'? 'active': ''}`} onClick={this.changeView.bind(this,'events')}><FontAwesomeIcon icon={faFlag}/> Events</div>
@@ -151,6 +183,18 @@ class App extends Component {
                             <div className={`festivalCats burger ${currentView === 'burger'? 'active': ''}`} onClick={this.changeView.bind(this,'burger')}> <FontAwesomeIcon icon={faHamburger}/> Burger</div>
                             <div className={`festivalCats cocktail ${currentView === 'cocktail'? 'active': ''}`} onClick={this.changeView.bind(this,'cocktail')}><FontAwesomeIcon icon={faCocktail}/> Cocktails</div>
                         </div>
+                        <div className="priceFilter">
+                            <label>Price Range ($)</label>
+                            <InputRange
+                                maxValue={this.state.filters['max']}
+                                minValue={0}
+                                value={this.state.value}
+                                onChange={value => this.setState({ value })}
+                                onChangeComplete={this.filter}
+                            />
+
+                        </div>
+
                     </div>
                     <Info
                         currentEvent={currentEvent}
@@ -162,7 +206,7 @@ class App extends Component {
                 {
                     eventsLoaded? <MapContainer
                         currentView={this.state.currentView}
-                        currentMarkers={allEvents[currentView]}
+                        currentMarkers={this.state.filteredMarkers}
                         selectedMarker={this.handleSelectMarker}
                         mapClick={this.handleMapClick}
                         mapReady={this.handleMapReady}

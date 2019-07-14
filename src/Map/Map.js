@@ -38,10 +38,19 @@ export class MapContainer extends Component {
                 activeMarker: null
             })
         }
+        if(this.props.currentMarkers !== prevProps.currentMarkers){
+            this.setState({
+                markers: this.props.currentMarkers,
+                activeMarker: null
+            })
+        }
     }
 
     shouldComponentUpdate(nextProps, nextState) {
         if((this.state.zoom !== nextState.zoom) || (this.state.mapLocation !== nextState.mapLocation)){
+            return true;
+        }
+        if(this.state.markers !== nextProps.currentMarkers){
             return true;
         }
         return (this.state.currentType !== nextProps.currentView);
@@ -94,8 +103,9 @@ export class MapContainer extends Component {
 
     render() {
         const {zoom, mapLocation} = this.state;
-      return (
-          <Map
+        this.mapReady();
+        return (
+            <Map
             google={this.props.google}
             initialCenter={mapLocation}
             center={mapLocation}
@@ -104,10 +114,11 @@ export class MapContainer extends Component {
             styles={styles}
             onClick={this.onMapClicked}
             onReady={this.mapReady}
-          >
-            {this.displayMarkers()}
-          </Map>
-      );
+            >
+                {this.displayMarkers()}
+            </Map>
+
+        );
     }
   }
 
