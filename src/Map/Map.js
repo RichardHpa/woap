@@ -114,6 +114,12 @@ export class MapContainer extends Component {
             styles={styles}
             onClick={this.onMapClicked}
             onReady={this.mapReady}
+            disableDefaultUI={true}
+            zoomControl={true}
+            zoomControlOptions={{
+                position: 'LEFT_CENTER'
+            }}
+
             >
                 {this.displayMarkers()}
             </Map>
@@ -125,3 +131,7 @@ export class MapContainer extends Component {
 export default GoogleApiWrapper({
   apiKey: (API_KEY)
 })(MapContainer)
+
+// zoomControlOptions {
+// position: google.maps.ControlPosition.LEFT_CENTER
+// },

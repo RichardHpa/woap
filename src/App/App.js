@@ -21,7 +21,8 @@ class App extends Component {
             currentEvent: null,
             value: { min: 2, max: 10 },
             filters: {min: 0, max: 10},
-            filteredMarkers: []
+            filteredMarkers: [],
+            warning: false
         }
 
         this.handleMapReady = this.handleMapReady.bind(this);
@@ -96,7 +97,7 @@ class App extends Component {
                     max: max
                 },
                 value: {
-                    min: 0,
+                    min: min,
                     max: max
                 },
                 filteredMarkers: allEvents[this.state.currentView]
@@ -105,16 +106,52 @@ class App extends Component {
     }
 
     handleMapReady(){
+        var self = this;
         this.setState({
             appLoaded: true,
             navVisibile: true,
         })
+        setTimeout(function(){
+            self.setState({
+                warning: true
+            })
+        }, 5000);
     }
 
     changeView(type){
+        const {value, allEvents} = this.state;
+        var min = 10000000;
+        var max = 0;
+        for (var k = 0; k < allEvents[type].length; k++) {
+            var price = 0;
+            if(type === 'events'){
+                price = parseInt(allEvents[type][k].eventDetails.highest_price);
+            } else if(type === 'burger'){
+                price = parseInt(allEvents[type][k].eventDetails.burger_price);
+            } else if(type === 'dine'){
+                price = parseInt(allEvents[type][k].eventDetails.price_of_your_festival_dish);
+            } else if(type === 'cocktail'){
+                price = parseInt(allEvents[type][k].eventDetails.price_of_cocktail_tapas_match);
+            }
+            if(price < min){
+                min = price;
+            }
+            if(price > max){
+                max = price;
+            }
+        }
         this.setState({
             currentView: type,
-            currentEvent: null
+            currentEvent: null,
+            filters: {
+                min: min,
+                max: max
+            },
+            value: {
+                min: min,
+                max: max
+            },
+            filteredMarkers: allEvents[type]
         })
     }
 
@@ -146,7 +183,16 @@ class App extends Component {
         const {value, allEvents, currentView, filteredMarkers} = this.state;
         let filteredEvents = []
         for (var i = 0; i < allEvents[currentView].length; i++) {
-            let price = parseInt(allEvents[currentView][i].eventDetails.burger_price);
+            var price = 0;
+            if(currentView === 'events'){
+                price = parseInt(allEvents[currentView][i].eventDetails.highest_price);
+            } else if(currentView === 'burger'){
+                price = parseInt(allEvents[currentView][i].eventDetails.burger_price);
+            } else if(currentView === 'dine'){
+                price = parseInt(allEvents[currentView][i].eventDetails.price_of_your_festival_dish);
+            } else if(currentView === 'cocktail'){
+                price = parseInt(allEvents[currentView][i].eventDetails.price_of_cocktail_tapas_match);
+            }
             if((price > value.min)){
                 filteredEvents.push(allEvents[currentView][i]);
             }
@@ -176,25 +222,29 @@ class App extends Component {
                     </div>
                 </div>
                 <div className={`sidebar ${navOpen? 'sidebar-open': ''}`}>
-                    <div className="filters">
-                        <div className="festivalCatsContainer">
-                            <div className={`festivalCats events ${currentView === 'events'? 'active': ''}`} onClick={this.changeView.bind(this,'events')}><FontAwesomeIcon icon={faFlag}/> Events</div>
-                            <div className={`festivalCats dine ${currentView === 'dine'? 'active': ''}`} onClick={this.changeView.bind(this,'dine')}><FontAwesomeIcon icon={faUtensils}/> Dine</div>
-                            <div className={`festivalCats burger ${currentView === 'burger'? 'active': ''}`} onClick={this.changeView.bind(this,'burger')}> <FontAwesomeIcon icon={faHamburger}/> Burger</div>
-                            <div className={`festivalCats cocktail ${currentView === 'cocktail'? 'active': ''}`} onClick={this.changeView.bind(this,'cocktail')}><FontAwesomeIcon icon={faCocktail}/> Cocktails</div>
-                        </div>
-                        <div className="priceFilter">
-                            <label>Price Range ($)</label>
-                            <InputRange
-                                maxValue={this.state.filters['max']}
-                                minValue={0}
-                                value={this.state.value}
-                                onChange={value => this.setState({ value })}
-                                onChangeComplete={this.filter}
-                            />
+                    <div className={`filters ${currentView}View`}>
+                        <div>
+                            <div className="festivalCatsContainer">
+                                <div className={`festivalCats events ${currentView === 'events'? 'active': ''}`} onClick={this.changeView.bind(this,'events')}><FontAwesomeIcon icon={faFlag}/> Events</div>
+                                <div className={`festivalCats dine ${currentView === 'dine'? 'active': ''}`} onClick={this.changeView.bind(this,'dine')}><FontAwesomeIcon icon={faUtensils}/> Dine</div>
+                                <div className={`festivalCats burger ${currentView === 'burger'? 'active': ''}`} onClick={this.changeView.bind(this,'burger')}> <FontAwesomeIcon icon={faHamburger}/> Burger</div>
+                                <div className={`festivalCats cocktail ${currentView === 'cocktail'? 'active': ''}`} onClick={this.changeView.bind(this,'cocktail')}><FontAwesomeIcon icon={faCocktail}/> Cocktails</div>
+                            </div>
+                            <div className="priceFilter">
+                                <label>Price Range ($)</label>
+                                <InputRange
+                                    maxValue={this.state.filters['max']}
+                                    minValue={this.state.filters['min']}
+                                    value={this.state.value}
+                                    onChange={value => this.setState({ value })}
+                                    onChangeComplete={this.filter}
+                                />
 
+                            </div>
                         </div>
-
+                        <div className="credit">
+                            <p>Created by <a href="http://richard-hpa.com/" target="_blank">Richard Hpa</a></p>
+                        </div>
                     </div>
                     <Info
                         currentEvent={currentEvent}
@@ -212,7 +262,9 @@ class App extends Component {
                         mapReady={this.handleMapReady}
                     />: ''
                 }
-
+                </div>
+                <div id="warning" className={this.state.warning? 'warning-open': ''}>
+                    <p>This is not an official Visa WOAP application and has just been created for fun by <a href="http://richard-hpa.com/" target="_blank">Richard Hpa</a>.</p>
                 </div>
             </div>
         )
