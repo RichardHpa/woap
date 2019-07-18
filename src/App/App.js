@@ -193,7 +193,7 @@ class App extends Component {
             } else if(currentView === 'cocktail'){
                 price = parseInt(allEvents[currentView][i].eventDetails.price_of_cocktail_tapas_match);
             }
-            if((price > value.min)){
+            if((price > value.min) && (price < value.max) ){
                 filteredEvents.push(allEvents[currentView][i]);
             }
         }
@@ -204,6 +204,7 @@ class App extends Component {
 
     render(){
         const { appLoaded, navOpen , navVisibile, allEvents, currentView, currentEvent, eventsLoaded} = this.state;
+        console.log(this.state);
         return(
             <div className="App">
                 <header className={`App-header ${appLoaded? '': 'App-Loading'}`}>
@@ -239,6 +240,8 @@ class App extends Component {
                                     onChange={value => this.setState({ value })}
                                     onChangeComplete={this.filter}
                                 />
+                            </div>
+                            <div>
 
                             </div>
                         </div>

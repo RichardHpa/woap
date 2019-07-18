@@ -4,6 +4,13 @@ $burger: #f1e000;
 $cocktail: #d143c8;
 $darkBlue: #04378c;
 
+$colours: (
+    $events: #7adfa9,
+    $dine: #f5921e,
+    $burger: #f1e000,
+    $cocktail: #d143c8
+);
+
 *{
     box-sizing: border-box;
 }
