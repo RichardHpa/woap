@@ -78,7 +78,6 @@ export class MapContainer extends Component {
 
     displayMarkers = () => {
         const { activeMarker } = this.state;
-        const { currentEvent } = this.props;
         return this.state.markers.map((marker, index) => {
             let icon = process.env.PUBLIC_URL + '/img/'+this.state.currentType+'Marker.png';
             if(activeMarker && (activeMarker.id === marker.id)){

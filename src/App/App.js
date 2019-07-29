@@ -119,7 +119,7 @@ class App extends Component {
     }
 
     changeView(type){
-        const {value, allEvents} = this.state;
+        const {allEvents} = this.state;
         var min = 10000000;
         var max = 0;
         for (var k = 0; k < allEvents[type].length; k++) {
@@ -180,7 +180,7 @@ class App extends Component {
     }
 
     filter(){
-        const {value, allEvents, currentView, filteredMarkers} = this.state;
+        const {value, allEvents, currentView} = this.state;
         let filteredEvents = []
         for (var i = 0; i < allEvents[currentView].length; i++) {
             var price = 0;
@@ -203,8 +203,7 @@ class App extends Component {
     }
 
     render(){
-        const { appLoaded, navOpen , navVisibile, allEvents, currentView, currentEvent, eventsLoaded} = this.state;
-        console.log(this.state);
+        const { appLoaded, navOpen , navVisibile, currentView, currentEvent, eventsLoaded} = this.state;
         return(
             <div className="App">
                 <header className={`App-header ${appLoaded? '': 'App-Loading'}`}>
@@ -241,12 +240,12 @@ class App extends Component {
                                     onChangeComplete={this.filter}
                                 />
                             </div>
-                            <div>
-
+                            <div className="dietaries">
+                              
                             </div>
                         </div>
                         <div className="credit">
-                            <p>Created by <a href="http://richard-hpa.com/" target="_blank">Richard Hpa</a></p>
+                            <p>Created by <a rel="noopener noreferrer" href="http://richard-hpa.com/" target="_blank">Richard Hpa</a></p>
                         </div>
                     </div>
                     <Info
@@ -267,7 +266,7 @@ class App extends Component {
                 }
                 </div>
                 <div id="warning" className={this.state.warning? 'warning-open': ''}>
-                    <p>This is not an official Visa WOAP application and has just been created for fun by <a href="http://richard-hpa.com/" target="_blank">Richard Hpa</a>.</p>
+                    <p>This is not an official Visa WOAP application and has just been created for fun by <a rel="noopener noreferrer" href="http://richard-hpa.com/" target="_blank">Richard Hpa</a>.</p>
                 </div>
             </div>
         )
