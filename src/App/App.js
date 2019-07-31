@@ -12,9 +12,9 @@ class App extends Component {
     constructor(props){
         super(props)
         this.state = {
-            appLoaded: true,
+            appLoaded: false,
             eventsLoaded: false,
-            navVisibile: true,
+            navVisibile: false,
             navOpen: false,
             allEvents: [],
             currentView: 'burger',

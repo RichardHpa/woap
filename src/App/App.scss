@@ -306,7 +306,7 @@
 #warning{
     width: 100vw;
     position: fixed;
-    bottom: -50px;
+    bottom: -100px;
     min-height: 50px;
     display: flex;
     background-color: $dine;
@@ -315,7 +315,7 @@
     padding: 5px;
     transition: bottom 1s;
     @media screen and (min-width:700px){
-        bottom: -30px;
+        bottom: -60px;
         min-height: 30px;
     }
     &.warning-open{
