@@ -171,5 +171,3 @@ class Info extends Component {
 
 
 export default Info;
-
-                // { currentEvent? this.renderMoreInfo() : '' }

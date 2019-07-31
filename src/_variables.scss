@@ -5,76 +5,30 @@ $cocktail: #d143c8;
 $darkBlue: #04378c;
 
 $colours: (
-    $events: #7adfa9,
-    $dine: #f5921e,
-    $burger: #f1e000,
-    $cocktail: #d143c8
+    'events': #7adfa9,
+    'dine': #f5921e,
+    'burger': #f1e000,
+    'cocktail': #d143c8
 );
 
 *{
     box-sizing: border-box;
 }
 
-.events{
-    background-color: $events;
-    color: $darkBlue;
-    border: 1px solid $events;
-    &:hover{
-        background-color: $darkBlue;
-        color: $events;
-        border: 1px solid $events;
-    }
-    &.active{
-        background-color: $darkBlue;
-        color: $events;
-        border: 1px solid $events;
-    }
-}
-
-.dine{
-    background-color: $dine;
-    color: $darkBlue;
-    border: 1px solid $dine;
-    &:hover{
-        background-color: $darkBlue;
-        color: $dine;
-        border: 1px solid $dine;
-    }
-    &.active{
-        background-color: $darkBlue;
-        color: $dine;
-        border: 1px solid $dine;
-    }
-}
-
-.burger{
-    background-color: $burger;
-    color: $darkBlue;
-    border: 1px solid $burger;
-    &:hover{
-        background-color: $darkBlue;
-        color: $burger;
-        border: 1px solid $burger;
-    }
-    &.active{
-        background-color: $darkBlue;
-        color: $burger;
-        border: 1px solid $burger;
-    }
-}
-
-.cocktail{
-    background-color: $cocktail;
-    color: $darkBlue;
-    border: 1px solid $cocktail;
-    &:hover{
-        background-color: $darkBlue;
-        color: $cocktail;
-        border: 1px solid $cocktail;
-    }
-    &.active{
-        background-color: $darkBlue;
-        color: $cocktail;
-        border: 1px solid $cocktail;
-    }
+@each $type, $colour in $colours {
+  .style-#{$type}{
+      background-color: $colour;
+      color: $darkBlue;
+      border: 1px solid $colour;
+      &:hover{
+          background-color: $darkBlue;
+          color: $colour;
+          border: 1px solid $colour;
+      }
+      &.active{
+          background-color: $darkBlue;
+          color: $colour;
+          border: 1px solid $colour;
+      }
+  }
 }

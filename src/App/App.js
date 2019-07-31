@@ -12,9 +12,9 @@ class App extends Component {
     constructor(props){
         super(props)
         this.state = {
-            appLoaded: false,
+            appLoaded: true,
             eventsLoaded: false,
-            navVisibile: false,
+            navVisibile: true,
             navOpen: false,
             allEvents: [],
             currentView: 'burger',
@@ -22,7 +22,15 @@ class App extends Component {
             value: { min: 2, max: 10 },
             filters: {min: 0, max: 10},
             filteredMarkers: [],
-            warning: false
+            warning: false,
+            dietaryRequirements: [
+                'Gluten Free',
+                'Dairy Free',
+                'Nut Free',
+                'Vegetarian',
+                'Vegan'
+            ],
+            activeDietaryFitlers: []
         }
 
         this.handleMapReady = this.handleMapReady.bind(this);
@@ -31,6 +39,9 @@ class App extends Component {
         this.handleMapClick = this.handleMapClick.bind(this);
         this.changeFilter = this.changeFilter.bind(this);
         this.filter = this.filter.bind(this);
+        this.changeCheckbox = this.changeCheckbox.bind(this);
+
+        this.filterEvents = this.filterEvents.bind(this);
     }
 
     componentDidMount () {
@@ -180,10 +191,57 @@ class App extends Component {
     }
 
     filter(){
-        const {value, allEvents, currentView} = this.state;
-        let filteredEvents = []
+        this.filterEvents();
+        // const {value, allEvents, currentView} = this.state;
+        // let filteredEvents = []
+        // for (var i = 0; i < allEvents[currentView].length; i++) {
+        //     var price = 0;
+        //     if(currentView === 'events'){
+        //         price = parseInt(allEvents[currentView][i].eventDetails.highest_price);
+        //     } else if(currentView === 'burger'){
+        //         price = parseInt(allEvents[currentView][i].eventDetails.burger_price);
+        //     } else if(currentView === 'dine'){
+        //         price = parseInt(allEvents[currentView][i].eventDetails.price_of_your_festival_dish);
+        //     } else if(currentView === 'cocktail'){
+        //         price = parseInt(allEvents[currentView][i].eventDetails.price_of_cocktail_tapas_match);
+        //     }
+        //     if((price > value.min) && (price < value.max) ){
+        //         filteredEvents.push(allEvents[currentView][i]);
+        //     }
+        // }
+        // this.setState({
+        //     filteredMarkers: filteredEvents
+        // })
+    }
+
+    changeCheckbox(value){
+        const {activeDietaryFitlers} = this.state;
+        if(value === 'None'){
+            this.setState({
+                activeDietaryFitlers: []
+            })
+        } else {
+            if(activeDietaryFitlers.includes(value)){
+                var a = activeDietaryFitlers.indexOf(value);
+                activeDietaryFitlers.splice(a, 1);
+            } else {
+                activeDietaryFitlers.push(value);
+            }
+            this.setState({
+                activeDietaryFitlers: activeDietaryFitlers,
+                currentEvent: null
+            })
+        }
+        this.filterEvents();
+    }
+
+
+
+    filterEvents(){
+        const {value, allEvents, currentView, activeDietaryFitlers} = this.state;
+        let filteredEventsPrice = [];
         for (var i = 0; i < allEvents[currentView].length; i++) {
-            var price = 0;
+            let price = 0;
             if(currentView === 'events'){
                 price = parseInt(allEvents[currentView][i].eventDetails.highest_price);
             } else if(currentView === 'burger'){
@@ -194,16 +252,45 @@ class App extends Component {
                 price = parseInt(allEvents[currentView][i].eventDetails.price_of_cocktail_tapas_match);
             }
             if((price > value.min) && (price < value.max) ){
-                filteredEvents.push(allEvents[currentView][i]);
+                filteredEventsPrice.push(allEvents[currentView][i]);
             }
         }
-        this.setState({
-            filteredMarkers: filteredEvents
-        })
+        if(currentView === 'burger'){
+            if(activeDietaryFitlers.length > 0){
+                let lowerDietary = []
+                for (var f = 0; f < activeDietaryFitlers.length; f++) {
+                    lowerDietary.push(activeDietaryFitlers[f].toLowerCase());
+                }
+                let filteredEventsDiet = [];
+                for (var j = 0; j < filteredEventsPrice.length; j++) {
+                    let currentEventDiet = filteredEventsPrice[j].eventDetails.does_your_burger_offering_cater_to_please_leave_blank_if_you_cannot_cater_to_these_dietaries;
+
+                    for (var x = 0; x < currentEventDiet.length; x++) {
+                        let requirement = currentEventDiet[x].toLowerCase().replace('_possible','');
+                        if(lowerDietary.includes(requirement)){
+                            filteredEventsDiet.push(filteredEventsPrice[j]);
+                        }
+                    }
+                }
+                this.setState({
+                    filteredMarkers: filteredEventsDiet
+                })
+            } else {
+                this.setState({
+                    filteredMarkers: filteredEventsPrice,
+                    currentEvent: null
+                })
+            }
+        } else {
+            this.setState({
+                filteredMarkers: filteredEventsPrice,
+                currentEvent: null
+            })
+        }
     }
 
     render(){
-        const { appLoaded, navOpen , navVisibile, currentView, currentEvent, eventsLoaded} = this.state;
+        const { appLoaded, navOpen , navVisibile, currentView, currentEvent, eventsLoaded, dietaryRequirements} = this.state;
         return(
             <div className="App">
                 <header className={`App-header ${appLoaded? '': 'App-Loading'}`}>
@@ -222,13 +309,13 @@ class App extends Component {
                     </div>
                 </div>
                 <div className={`sidebar ${navOpen? 'sidebar-open': ''}`}>
-                    <div className={`filters ${currentView}View`}>
+                    <div className={`filters view-${currentView}`}>
                         <div>
                             <div className="festivalCatsContainer">
-                                <div className={`festivalCats events ${currentView === 'events'? 'active': ''}`} onClick={this.changeView.bind(this,'events')}><FontAwesomeIcon icon={faFlag}/> Events</div>
-                                <div className={`festivalCats dine ${currentView === 'dine'? 'active': ''}`} onClick={this.changeView.bind(this,'dine')}><FontAwesomeIcon icon={faUtensils}/> Dine</div>
-                                <div className={`festivalCats burger ${currentView === 'burger'? 'active': ''}`} onClick={this.changeView.bind(this,'burger')}> <FontAwesomeIcon icon={faHamburger}/> Burger</div>
-                                <div className={`festivalCats cocktail ${currentView === 'cocktail'? 'active': ''}`} onClick={this.changeView.bind(this,'cocktail')}><FontAwesomeIcon icon={faCocktail}/> Cocktails</div>
+                                <div className={`festivalCats style-events ${currentView === 'events'? 'active': ''}`} onClick={this.changeView.bind(this,'events')}><FontAwesomeIcon icon={faFlag}/> Events</div>
+                                <div className={`festivalCats style-dine ${currentView === 'dine'? 'active': ''}`} onClick={this.changeView.bind(this,'dine')}><FontAwesomeIcon icon={faUtensils}/> Dine</div>
+                                <div className={`festivalCats style-burger ${currentView === 'burger'? 'active': ''}`} onClick={this.changeView.bind(this,'burger')}> <FontAwesomeIcon icon={faHamburger}/> Burger</div>
+                                <div className={`festivalCats style-cocktail ${currentView === 'cocktail'? 'active': ''}`} onClick={this.changeView.bind(this,'cocktail')}><FontAwesomeIcon icon={faCocktail}/> Cocktails</div>
                             </div>
                             <div className="priceFilter">
                                 <label>Price Range ($)</label>
@@ -240,9 +327,25 @@ class App extends Component {
                                     onChangeComplete={this.filter}
                                 />
                             </div>
-                            <div className="dietaries">
-                              
-                            </div>
+                            {
+                                currentView === 'burger'?
+                                <div className="dietaries">
+                                    <label>Dietary Requirements</label>
+                                    {dietaryRequirements.map(requirement => {
+                                        return <div className="example" key={requirement}>
+                                          <label className="checkbox-button">
+                                            <input type="checkbox" className="checkbox-button__input" name={requirement} value={requirement} onChange={this.changeCheckbox.bind(this, requirement)}/>
+                                            <span className="checkbox-button__control"></span>
+                                            <span className="checkbox-button__label">{requirement}</span>
+                                          </label>
+
+                                        </div>
+                                    })}
+                                </div>
+                                :
+                                ''
+                            }
+
                         </div>
                         <div className="credit">
                             <p>Created by <a rel="noopener noreferrer" href="http://richard-hpa.com/" target="_blank">Richard Hpa</a></p>

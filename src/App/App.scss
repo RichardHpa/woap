@@ -19,12 +19,7 @@
     justify-content: center;
     transition: height 1s;
     padding: 5px 15px;
-
     z-index: 105;
-    #authList{
-        // display: none;
-        list-style: none;
-    }
     .App-logo {
       height: 100%;
       max-height: 40vmin;
@@ -46,13 +41,6 @@
     height: 100vh;
     z-index: 1;
     overflow: auto;
-}
-
-
-
-* {
-  margin: 0;
-  padding: 0;
 }
 
 .hamburgerContainer{
@@ -154,79 +142,6 @@
     -o-transition: .5s ease-in-out;
     transition: .5s ease-in-out;
     color: white;
-}
-
-.filters{
-    padding: 75px 10px;
-    background-color: $darkBlue;
-    height: 100%;
-    position: absolute;
-    z-index: 100;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    &.burgerView{
-        .credit{
-            a{
-                text-decoration: underline;
-                color: $burger;
-            }
-        }
-        .input-range__slider {
-            background: $burger;
-            border: 1px solid $burger;
-        }
-        .input-range__track--active {
-              background: $burger;
-          }
-    }
-    &.dineView{
-        .credit{
-            a{
-                text-decoration: underline;
-                color: $dine;
-            }
-        }
-        .input-range__slider {
-            background: $dine;
-            border: 1px solid $dine;
-        }
-        .input-range__track--active {
-              background: $dine;
-          }
-    }
-    &.eventsView{
-        .credit{
-            a{
-                text-decoration: underline;
-                color: $events;
-            }
-        }
-        .input-range__slider {
-            background: $events;
-            border: 1px solid $events;
-        }
-        .input-range__track--active {
-              background: $events;
-          }
-    }
-    &.cocktailView{
-        .credit{
-            a{
-                text-decoration: underline;
-                color: $cocktail;
-            }
-        }
-        .input-range__slider {
-            background: $cocktail;
-            border: 1px solid $cocktail;
-        }
-        .input-range__track--active {
-              background: $cocktail;
-          }
-    }
-
 }
 
 .sidebar-open{
@@ -410,4 +325,101 @@
 
 .gm-bundled-control-on-bottom{
     bottom: 150px !important;
+}
+
+
+
+
+
+
+
+
+
+.checkbox-button {
+    cursor: pointer;
+
+    input{
+        font-size: 1rem;
+        line-height: 1.5;
+        padding: 11px 23px;
+        border: 1px solid rgba(0,0,0,.15);
+        border-radius: 0;
+        outline: 0;
+        background-color: transparent;
+    }
+    .checkbox-button__input {
+        opacity: 0;
+        position: absolute;
+    }
+
+    .checkbox-button__control {
+        position: relative;
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        margin-right: 12px;
+        vertical-align: middle;
+        background-color: inherit;
+        color: #017b5f;
+        border: 2px solid #666;
+        transform: scale(0.75);
+    }
+
+}
+
+.checkbox-button__input:checked+.checkbox-button__control:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+
+}
+
+
+
+
+
+.dietaries{
+    text-align: left;
+    padding-top: 30px;
+}
+
+.filters{
+    padding: 75px 10px;
+    background-color: $darkBlue;
+    height: 100%;
+    position: absolute;
+    z-index: 100;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    @each $type, $colour in $colours {
+        &.view-#{$type}{
+            .credit{
+                a{
+                    text-decoration: underline;
+                    color: $colour;
+                }
+            }
+            .input-range__slider {
+                background: $colour;
+                border: 1px solid $colour;
+            }
+            .input-range__track--active {
+                  background: $colour;
+            }
+
+            .checkbox-button__input:checked+.checkbox-button__control:after{
+                background-color: $colour;
+            }
+
+            .checkbox-button__input:checked+.checkbox-button__control {
+                border-color: $colour;
+            }
+        }
+    }
 }
