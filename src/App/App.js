@@ -174,7 +174,8 @@ class App extends Component {
 
     handleSelectMarker(marker){
         this.setState({
-            currentEvent: marker
+            currentEvent: marker,
+            navOpen: false
         });
     }
 
