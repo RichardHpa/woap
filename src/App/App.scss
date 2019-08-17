@@ -389,6 +389,7 @@
 
 .filters{
     padding: 75px 10px;
+    padding-bottom: 150px;
     background-color: $darkBlue;
     height: 100%;
     position: absolute;
@@ -398,6 +399,9 @@
     flex-direction: column;
     justify-content: space-between;
     overflow-y: auto;
+    @media screen and (min-width: 500px){
+        padding: 75px 10px;
+    }
     @each $type, $colour in $colours {
         &.view-#{$type}{
             .credit{
