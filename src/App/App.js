@@ -319,10 +319,10 @@ class App extends Component {
 
             if(activeMeatFitlers.length > 0){
                 let filteredEventsMeat = [];
-                for (var j = 0; j < filteredEventsDiet.length; j++) {
-                    let meat = filteredEventsDiet[j].eventDetails.what_is_the_main_protein_of_your_burger.trim();
+                for (var z = 0; z < filteredEventsDiet.length; z++) {
+                    let meat = filteredEventsDiet[z].eventDetails.what_is_the_main_protein_of_your_burger.trim();
                     if(activeMeatFitlers.includes(meat)){
-                        filteredEventsMeat.push(filteredEventsDiet[j]);
+                        filteredEventsMeat.push(filteredEventsDiet[z]);
                     }
                 }
                 this.setState({
