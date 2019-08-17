@@ -30,7 +30,19 @@ class App extends Component {
                 'Vegetarian',
                 'Vegan'
             ],
-            activeDietaryFitlers: []
+            activeDietaryFitlers: [],
+            availableMeats: [
+                'Pork',
+                'Vegetarian',
+                'Beef',
+                'Chicken',
+                'Lamb',
+                'Seafood',
+                'Fish',
+                'Venison',
+                'Other'
+            ],
+            activeMeatFitlers: [],
         }
 
         this.handleMapReady = this.handleMapReady.bind(this);
@@ -40,6 +52,7 @@ class App extends Component {
         this.changeFilter = this.changeFilter.bind(this);
         this.filter = this.filter.bind(this);
         this.changeCheckbox = this.changeCheckbox.bind(this);
+        this.changeProteanCheckbox = this.changeProteanCheckbox.bind(this);
 
         this.filterEvents = this.filterEvents.bind(this);
     }
@@ -79,6 +92,7 @@ class App extends Component {
                     } else if(eventID === 30){
                         //burger
                         allEvents['burger'].push(singleEventToPush);
+                        // console.log(singleEventToPush['eventDetails'].what_is_the_main_protein_of_your_burger);
                     } else if(eventID === 31){
                         //dine
                         allEvents['dine'].push(singleEventToPush);
@@ -113,6 +127,7 @@ class App extends Component {
                 },
                 filteredMarkers: allEvents[this.state.currentView]
             });
+
         })
     }
 
@@ -236,10 +251,31 @@ class App extends Component {
         this.filterEvents();
     }
 
+    changeProteanCheckbox(value){
+        const {activeMeatFitlers} = this.state;
+        if(value === 'None'){
+            this.setState({
+                activeMeatFitlers: []
+            })
+        } else {
+            if(activeMeatFitlers.includes(value)){
+                var a = activeMeatFitlers.indexOf(value);
+                activeMeatFitlers.splice(a, 1);
+            } else {
+                activeMeatFitlers.push(value);
+            }
+            this.setState({
+                activeMeatFitlers: activeMeatFitlers,
+                currentEvent: null
+            })
+        }
+        this.filterEvents();
+    }
+
 
 
     filterEvents(){
-        const {value, allEvents, currentView, activeDietaryFitlers} = this.state;
+        const {value, allEvents, currentView, activeDietaryFitlers, activeMeatFitlers} = this.state;
         let filteredEventsPrice = [];
         for (var i = 0; i < allEvents[currentView].length; i++) {
             let price = 0;
@@ -252,17 +288,18 @@ class App extends Component {
             } else if(currentView === 'cocktail'){
                 price = parseInt(allEvents[currentView][i].eventDetails.price_of_cocktail_tapas_match);
             }
-            if((price > value.min) && (price < value.max) ){
+            if((price >= value.min) && (price <= value.max) ){
                 filteredEventsPrice.push(allEvents[currentView][i]);
             }
         }
         if(currentView === 'burger'){
+            let filteredEventsDiet = [];
             if(activeDietaryFitlers.length > 0){
                 let lowerDietary = []
                 for (var f = 0; f < activeDietaryFitlers.length; f++) {
                     lowerDietary.push(activeDietaryFitlers[f].toLowerCase());
                 }
-                let filteredEventsDiet = [];
+
                 for (var j = 0; j < filteredEventsPrice.length; j++) {
                     let currentEventDiet = filteredEventsPrice[j].eventDetails.does_your_burger_offering_cater_to_please_leave_blank_if_you_cannot_cater_to_these_dietaries;
 
@@ -277,8 +314,24 @@ class App extends Component {
                     filteredMarkers: filteredEventsDiet
                 })
             } else {
+                filteredEventsDiet = filteredEventsPrice;
+            }
+
+            if(activeMeatFitlers.length > 0){
+                let filteredEventsMeat = [];
+                for (var j = 0; j < filteredEventsDiet.length; j++) {
+                    let meat = filteredEventsDiet[j].eventDetails.what_is_the_main_protein_of_your_burger.trim();
+                    if(activeMeatFitlers.includes(meat)){
+                        filteredEventsMeat.push(filteredEventsDiet[j]);
+                    }
+                }
                 this.setState({
-                    filteredMarkers: filteredEventsPrice,
+                    filteredMarkers: filteredEventsMeat,
+                    currentEvent: null
+                })
+            } else {
+                this.setState({
+                    filteredMarkers: filteredEventsDiet,
                     currentEvent: null
                 })
             }
@@ -291,7 +344,7 @@ class App extends Component {
     }
 
     render(){
-        const { appLoaded, navOpen , navVisibile, currentView, currentEvent, eventsLoaded, dietaryRequirements} = this.state;
+        const { appLoaded, navOpen , navVisibile, currentView, currentEvent, eventsLoaded, dietaryRequirements,availableMeats} = this.state;
         return(
             <div className="App">
                 <header className={`App-header ${appLoaded? '': 'App-Loading'}`}>
@@ -336,6 +389,24 @@ class App extends Component {
                                         return <div className="example" key={requirement}>
                                           <label className="checkbox-button">
                                             <input type="checkbox" className="checkbox-button__input" name={requirement} value={requirement} onChange={this.changeCheckbox.bind(this, requirement)}/>
+                                            <span className="checkbox-button__control"></span>
+                                            <span className="checkbox-button__label">{requirement}</span>
+                                          </label>
+
+                                        </div>
+                                    })}
+                                </div>
+                                :
+                                ''
+                            }
+                            {
+                                currentView === 'burger'?
+                                <div className="dietaries">
+                                    <label>Main Protean</label>
+                                    {availableMeats.map(requirement => {
+                                        return <div className="example" key={requirement}>
+                                          <label className="checkbox-button">
+                                            <input type="checkbox" className="checkbox-button__input" name={requirement} value={requirement} onChange={this.changeProteanCheckbox.bind(this, requirement)}/>
                                             <span className="checkbox-button__control"></span>
                                             <span className="checkbox-button__label">{requirement}</span>
                                           </label>
