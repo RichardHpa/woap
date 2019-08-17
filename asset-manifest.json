@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/woap/static/css/main.81fab67c.chunk.css",
-    "main.js": "/woap/static/js/main.6534c825.chunk.js",
-    "main.js.map": "/woap/static/js/main.6534c825.chunk.js.map",
+    "main.css": "/woap/static/css/main.a75c9236.chunk.css",
+    "main.js": "/woap/static/js/main.7656d9ae.chunk.js",
+    "main.js.map": "/woap/static/js/main.7656d9ae.chunk.js.map",
     "runtime~main.js": "/woap/static/js/runtime~main.23542a0b.js",
     "runtime~main.js.map": "/woap/static/js/runtime~main.23542a0b.js.map",
     "static/js/2.710be5e2.chunk.js": "/woap/static/js/2.710be5e2.chunk.js",
     "static/js/2.710be5e2.chunk.js.map": "/woap/static/js/2.710be5e2.chunk.js.map",
     "index.html": "/woap/index.html",
-    "precache-manifest.a867731e7eec24f9e2c037064be78181.js": "/woap/precache-manifest.a867731e7eec24f9e2c037064be78181.js",
+    "precache-manifest.77b9c6f0b9ffd8395682276845ec5948.js": "/woap/precache-manifest.77b9c6f0b9ffd8395682276845ec5948.js",
     "service-worker.js": "/woap/service-worker.js",
-    "static/css/main.81fab67c.chunk.css.map": "/woap/static/css/main.81fab67c.chunk.css.map",
+    "static/css/main.a75c9236.chunk.css.map": "/woap/static/css/main.a75c9236.chunk.css.map",
     "static/media/woap19-logo.svg": "/woap/static/media/woap19-logo.3c90ae3e.svg"
   }
 }
