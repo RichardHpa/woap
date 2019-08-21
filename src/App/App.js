@@ -402,7 +402,7 @@ class App extends Component {
                             {
                                 currentView === 'burger'?
                                 <div className="dietaries">
-                                    <label>Main Protean</label>
+                                    <label>Main Protein</label>
                                     {availableMeats.map(requirement => {
                                         return <div className="example" key={requirement}>
                                           <label className="checkbox-button">
@@ -410,7 +410,6 @@ class App extends Component {
                                             <span className="checkbox-button__control"></span>
                                             <span className="checkbox-button__label">{requirement}</span>
                                           </label>
-
                                         </div>
                                     })}
                                 </div>
