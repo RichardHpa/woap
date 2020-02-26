@@ -1,6 +1,6 @@
 {
   "name": "woap",
-  "version": "0.1.0",
+  "version": "1.4",
   "private": true,
   "homepage": "https://richardhpa.github.io/woap",
   "dependencies": {
