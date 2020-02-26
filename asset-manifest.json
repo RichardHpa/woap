@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/woap/static/css/main.e684bb0b.chunk.css",
-    "main.js": "/woap/static/js/main.ef4b976d.chunk.js",
-    "main.js.map": "/woap/static/js/main.ef4b976d.chunk.js.map",
+    "main.js": "/woap/static/js/main.6f60d1ff.chunk.js",
+    "main.js.map": "/woap/static/js/main.6f60d1ff.chunk.js.map",
     "runtime~main.js": "/woap/static/js/runtime~main.23542a0b.js",
     "runtime~main.js.map": "/woap/static/js/runtime~main.23542a0b.js.map",
     "static/js/2.710be5e2.chunk.js": "/woap/static/js/2.710be5e2.chunk.js",
     "static/js/2.710be5e2.chunk.js.map": "/woap/static/js/2.710be5e2.chunk.js.map",
     "index.html": "/woap/index.html",
-    "precache-manifest.77fb6664dba59f72559d6236ed4b5d9f.js": "/woap/precache-manifest.77fb6664dba59f72559d6236ed4b5d9f.js",
+    "precache-manifest.5c156c26a510edd513f802131345eddf.js": "/woap/precache-manifest.5c156c26a510edd513f802131345eddf.js",
     "service-worker.js": "/woap/service-worker.js",
     "static/css/main.e684bb0b.chunk.css.map": "/woap/static/css/main.e684bb0b.chunk.css.map",
     "static/media/woap19-logo.svg": "/woap/static/media/woap19-logo.3c90ae3e.svg"
