@@ -58,7 +58,8 @@ class App extends Component {
     }
 
     componentDidMount () {
-        axios.get('https://visawoap.com/api/venues/page:1/limit:1000/.json?key=4e44f1ac85cd60e3caa56bfd4afb675e')
+        // axios.get('https://visawoap.com/api/venues/page:1/limit:1000/.json?key=4e44f1ac85cd60e3caa56bfd4afb675e')
+        axios.get('./data.json')
         .then(response => {
             const allLocations = [];
             for (var i = 0; i < response.data.venues.length; i++) {
@@ -208,26 +209,6 @@ class App extends Component {
 
     filter(){
         this.filterEvents();
-        // const {value, allEvents, currentView} = this.state;
-        // let filteredEvents = []
-        // for (var i = 0; i < allEvents[currentView].length; i++) {
-        //     var price = 0;
-        //     if(currentView === 'events'){
-        //         price = parseInt(allEvents[currentView][i].eventDetails.highest_price);
-        //     } else if(currentView === 'burger'){
-        //         price = parseInt(allEvents[currentView][i].eventDetails.burger_price);
-        //     } else if(currentView === 'dine'){
-        //         price = parseInt(allEvents[currentView][i].eventDetails.price_of_your_festival_dish);
-        //     } else if(currentView === 'cocktail'){
-        //         price = parseInt(allEvents[currentView][i].eventDetails.price_of_cocktail_tapas_match);
-        //     }
-        //     if((price > value.min) && (price < value.max) ){
-        //         filteredEvents.push(allEvents[currentView][i]);
-        //     }
-        // }
-        // this.setState({
-        //     filteredMarkers: filteredEvents
-        // })
     }
 
     changeCheckbox(value){
@@ -319,10 +300,10 @@ class App extends Component {
 
             if(activeMeatFitlers.length > 0){
                 let filteredEventsMeat = [];
-                for (var j = 0; j < filteredEventsDiet.length; j++) {
-                    let meat = filteredEventsDiet[j].eventDetails.what_is_the_main_protein_of_your_burger.trim();
+                for (var k = 0; k < filteredEventsDiet.length; k++) {
+                    let meat = filteredEventsDiet[k].eventDetails.what_is_the_main_protein_of_your_burger.trim();
                     if(activeMeatFitlers.includes(meat)){
-                        filteredEventsMeat.push(filteredEventsDiet[j]);
+                        filteredEventsMeat.push(filteredEventsDiet[k]);
                     }
                 }
                 this.setState({
